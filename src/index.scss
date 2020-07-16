@@ -1,3 +1,65 @@
 @import 'styles/dashboard';
 @import 'styles/signup';
 @import 'styles/login';
+
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+body{
+    font-size: 16px;
+}
+
+.app {
+    background: rgb(147, 200, 235);
+    width: 100%;
+    height: 100vh;
+    
+    header{
+        .navbar {
+            .container{
+                .navbar-collapse{
+                    .d-flex{
+                        float: right;
+                    }
+                }
+            }
+        }
+    }
+
+    .content{
+        width: 60%;
+        height: 100%;
+        margin: auto;
+
+        h1{
+            color: white;
+            font-size: 250%;
+            border-radius: 5px;
+            text-transform: uppercase;
+            border: 3px solid white;
+            padding: 2.5rem;
+            margin-top: 10%;
+            text-align: center;
+        }
+
+        #custom-button-wrapper{
+            width: 200px;
+            height: 200px;
+            background-color: rgb(218, 44, 44);
+            border-radius: 50%;
+            margin: 40px auto;
+            font-size: 2rem;
+            letter-spacing: 1px;;
+            text-align: center;
+            line-height: 200px;
+            text-transform: uppercase;
+            color: white;
+            display: block;
+
+        }
+    }
+
+}

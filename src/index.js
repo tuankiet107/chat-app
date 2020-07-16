@@ -6,12 +6,13 @@ import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import LoginComponent from './login/login';
-import SignupComponent from './signup/signup';
-import DashboardComponent from './dashboard/dashboard';
+import LoginComponent from './components/auth/Login';
+import SignupComponent from './components/auth/SignUp';
+import DashboardComponent from './components/dashboard/Dashboard';
+import App from './App';
 
 const firebase = require('firebase');
-require("firebase/firestore");
+require('firebase/firestore');
 
 firebase.initializeApp({
   apiKey: "AIzaSyARHRnXqS9W39GBjgHjm7aF4fe5VXjJ_7c",
@@ -25,6 +26,7 @@ firebase.initializeApp({
 
 const routing = (
   <Router>
+    <Route path='/' exact component={App}></Route>
     <Route path='/login' component={LoginComponent}></Route>
     <Route path='/signup' component={SignupComponent}></Route>
     <Route path='/dashboard' component={DashboardComponent}></Route>
