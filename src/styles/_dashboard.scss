@@ -1,24 +1,33 @@
 .dash-board {
   height: 100vh;
-    background-color:#f5f3f3;
+    background-color:#fff;
 
   .row {
-    height: 100%;
+    height: auto;
     margin-right: 0 !important;
 
     .col-left {
-      border-right: 1px solid rgb(133, 131, 131);
+      padding: 10px 0 0 10px;
+      height: auto;
 
       .header-left {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        margin-bottom: 30px;
 
         #info-user {
           width: 60px;
           height: 60px;
           background-image: url("https://picsum.photos/60/60");
           border-radius: 50%;
+          margin-left: 10px;
+
+          &::after{
+            content: "You";
+            font-size: 30px;
+            margin-left: 60px;
+          }
         }
 
         .btn-logout{
@@ -28,18 +37,131 @@
             border: none;
             border-radius: 20px;
             box-shadow: 2px 6px 8px #888888;
+            margin-right: 10px;
+            outline: none;
+            transition: all 0.5s ease-in-out;
+            opacity: 0.8;
+
+            &:hover{
+              transform: scale(1.06);
+              opacity: 1;
+            }
         }
       }
 
-      .header-right {
-        #info-friend {
+      .view-users{
+        .list-group{
+          .list-group-item{
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            
+            .avatar{
+              width: 50px;
+              height: 50px;
+              background-color: rgb(235, 158, 158);
+              border-radius: 50%;
+              margin-right: 20px;
+              text-align: center;
+              line-height: 50px;
+              text-transform: uppercase;
+              font-size: 20px;
+            }
+          }
 
         }
       }
     }
 
+    .col-right-empty{
+      font-size: 50px;
+      line-height: 300px;
+      text-align: center;
+      border-left: 1px solid rgb(199, 195, 195);
+    }
     .col-right {
-      padding: 0 !important;
+      padding: 10px 0 0 0 !important;
+      height: 100%;
+      border-left: 1px solid rgb(199, 195, 195);
+
+      .header-right {
+        border-bottom: 1px solid rgb(209, 208, 208);
+        height: 60px;
+
+        #info-friend {
+          padding-left: 20px;
+          display: flex;
+          align-items: center;
+
+          .avatar{
+            width: 50px;
+            height: 50px;
+            background-color: rgb(235, 158, 158);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            text-transform: uppercase;
+            font-size: 20px;
+          }
+
+          span{
+            margin-left: 10px;
+            font-size: 20px;
+          }
+        }
+      }
+
+      .view-chat{
+        width: 100%;
+        height: auto;
+        background-color: #faf9f9;
+        padding-top: 15px;
+
+        .user-current{
+          overflow-wrap: break-word;
+          padding: 10px 20px;
+          background-color: #3498db;
+          color: white;
+          border-radius: 20px;
+          inline-size: fit-content;
+          max-inline-size: 350px;
+          margin: 15px 10px 15px auto;
+        }
+
+        div{
+          margin-left: 10px;
+
+          span{
+            opacity: 0.5;
+          }
+          .user-friend{
+            overflow-wrap: break-word;
+            padding: 10px 20px;
+            background-color: #d4d5d6;
+            color: black;
+            border-radius: 20px;
+            inline-size: fit-content;
+            max-inline-size: 350px;
+            margin: 5px auto 5px 0;
+          }
+        }
+        
+
+      }
+
+      .send-text{
+        width: 100%;
+        position: sticky;
+        bottom: 0;
+
+        form{
+          display: flex;
+
+          #textBox{
+            margin-right: 0;
+          }
+        }
+      }
     }
   }
 }
