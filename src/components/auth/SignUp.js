@@ -51,8 +51,8 @@ class SignupComponent extends Component {
                     .set({
                         email: authUser.user.email
                     })
-                    .then(() => {
-                        history.push('/dashboard');
+                    .then(async () => {
+                        await history.push('/dashboard');
                         localStorage.setItem('user', this.state.email)
                     }, err => {
                         console.log(err);

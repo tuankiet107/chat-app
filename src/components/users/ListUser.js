@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
-import {Col, ListGroup} from 'react-bootstrap';
+import {Form, FormControl, Button, Row, Col, ListGroup, InputGroup} from 'react-bootstrap';
 
 const firebase = require('firebase');
 
 class ListUser extends Component {
+    constructor(){
+      super();
+      this.state = {
+        email: null,
+        isFormVisible: false
+      }
+    }
 
     Logout = async () => {
         const {history} = this.props;
@@ -15,38 +22,78 @@ class ListUser extends Component {
     }
 
     onSelectChat = (index) => {
-      this.props.selectedChat(index)
+      this.props.selectedChat(index);
+      this.setState({
+        color: '#ccc'
+      })
     }
 
-    render() {
-        // let {chats} = this.props;
-        // let result = chats.map(chat => {
-        //   return chat.users.filter(user => user !== this.props.userEmail)
-        // })
-        // console.log(result)
+    newChat = () => {
+      this.setState({
+        isFormVisible: !this.state.isFormVisible
+      })
+    }
 
+    chatWithUser = (e) => {
+      this.setState({
+        email: e.target.value
+      })
+    }
+
+    handNewChat = (e) => {
+      e.preventDefault();
+      this.props.newChatProps(this.state.email);
+
+      document.getElementById('chat-with-user').value = '';
+    }
+
+
+    render() {
         return (
           <Col className="col-left" md={4} lg={4}>
-            <div className="header-left">
-              <div id="info-user"></div>
-              <button className="btn-logout" onClick={this.Logout}>
+
+            <Row className="header-left">
+              <Col lg="4" md="8" sm="8" xs="8"><div id="info-user"></div></Col>
+              <Col lg="4" md="4" sm="4" xs="4"><button className="btn-logout" onClick={this.Logout}>
                 Logout
-              </button>
-            </div>
+              </button></Col>
+              <Col lg="4" md="12"><button className="btn-new-chat" onClick={this.newChat}>New Chat</button></Col>
+            </Row>
+
+            { this.state.isFormVisible ?              
+                <Form onSubmit={this.handNewChat}>
+                  <InputGroup>
+                    <FormControl id="chat-with-user" type="text" placeholder="User email" onChange={this.chatWithUser} />
+                    <Button type="submit" variant="primary">Chat</Button>
+                  </InputGroup>
+                </Form> : ''
+            }
 
             <div className="view-users">
-            
               <ListGroup>
-                {
-                    this.props.chats.map((chat, index) => {
-                        return <ListGroup.Item key={index} onClick={() => this.onSelectChat(index)}>
-                                <div className="avatar">{chat.users.filter(user => user !== this.props.userEmail)[0].split('')[0]}</div>
-                                <span>{chat.users.filter(user => user !== this.props.userEmail)}</span>
-                            </ListGroup.Item>;
-                    })
-                }
+                {this.props.chats.map((chat, index) => {
+                  return (
+                    <ListGroup.Item
+                      key={index}
+                      onClick={() => this.onSelectChat(index)}
+                    >
+                      <div className="avatar">
+                        {
+                          chat.users
+                            .filter((user) => user !== this.props.userEmail)[0]
+                            .split("")[0]
+                        }
+                      </div>
+                      <span>
+                        {chat.users.filter(
+                          (user) => user !== this.props.userEmail
+                        )}
+                      </span>
+                      {/* {this.props.warningNewMessage === false ? <span style={{marginLeft: 'auto', color: 'red'}}>New</span> : ''} */}
+                    </ListGroup.Item>
+                  );
+                })}
               </ListGroup>
-
             </div>
           </Col>
         );

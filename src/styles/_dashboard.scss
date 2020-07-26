@@ -1,43 +1,60 @@
 .dash-board {
   height: 100vh;
-    background-color:#fff;
+  background-color:#fff;
 
   .row {
     height: auto;
-    margin-right: 0 !important;
+    margin: 0 !important;
 
     .col-left {
-      padding: 10px 0 0 10px;
       height: auto;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      padding: 0 !important;
 
-      .header-left {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-
-        #info-user {
-          width: 60px;
-          height: 60px;
-          background-image: url("https://picsum.photos/60/60");
-          border-radius: 50%;
-          margin-left: 10px;
-
-          &::after{
-            content: "You";
-            font-size: 30px;
-            margin-left: 60px;
+        .header-left{
+          div{
+            padding: 10px 0;
           }
-        }
+          
+          #info-user {
+            width: 60px;
+            height: 60px;
+            background-image: url("https://picsum.photos/60/60");
+            border-radius: 50%;
+            margin-left: 20px;
+  
+            &::after{
+              content: "You";
+              font-size: 30px;
+              margin-left: 60px;
+            }
+          }
+  
+          .btn-new-chat{
+            width: 100%;
+            height: 40px;
+            background-color: rgb(117, 145, 236);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 2px 6px 8px #888888;
+            outline: none;
+            color: white;
 
-        .btn-logout{
-            width: 100px;
+            &:hover{
+              transform: scale(1.06);
+            }
+          }
+
+          .btn-logout{
+            width: 90px;
             height: 40px;
             background-color: #fff;
             border: none;
             border-radius: 20px;
             box-shadow: 2px 6px 8px #888888;
-            margin-right: 10px;
             outline: none;
             transition: all 0.5s ease-in-out;
             opacity: 0.8;
@@ -50,11 +67,16 @@
       }
 
       .view-users{
+        box-sizing: border-box;
         .list-group{
           .list-group-item{
             display: flex;
             align-items: center;
             cursor: pointer;
+
+            &:hover{
+              background-color: rgb(228, 227, 227);
+            }
             
             .avatar{
               width: 50px;
@@ -68,7 +90,6 @@
               font-size: 20px;
             }
           }
-
         }
       }
     }
@@ -78,15 +99,22 @@
       line-height: 300px;
       text-align: center;
       border-left: 1px solid rgb(199, 195, 195);
+      margin-left: auto;
     }
+    
     .col-right {
       padding: 10px 0 0 0 !important;
       height: 100%;
       border-left: 1px solid rgb(199, 195, 195);
+      margin-left: auto;
 
       .header-right {
         border-bottom: 1px solid rgb(209, 208, 208);
-        height: 60px;
+        width: 100%;
+        background-color: #fff;
+        position: fixed;
+        top: 0;
+        z-index: 999;
 
         #info-friend {
           padding-left: 20px;
@@ -115,7 +143,7 @@
         width: 100%;
         height: auto;
         background-color: #faf9f9;
-        padding-top: 15px;
+        padding-top: 35px;
 
         .user-current{
           overflow-wrap: break-word;

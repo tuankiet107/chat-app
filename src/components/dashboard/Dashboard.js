@@ -12,7 +12,9 @@ class DashboardComponent extends Component {
     this.state = {
       email: '',
       chats: [],
-      selectedChatWithUser: null
+      newChatWithUser: null,
+      selectedChatWithUser: null,
+      receiverHasRead: false
     };
   }
 
@@ -28,7 +30,6 @@ class DashboardComponent extends Component {
                   .where('users', 'array-contains', user.email)
                   .onSnapshot(async snapshot => {
                     const chats = snapshot.docs.map(doc => doc.data());
-                    const id = snapshot.docs.map(doc => doc.id);
                     await this.setState({
                       email: user.email,
                       chats: chats
@@ -43,23 +44,19 @@ class DashboardComponent extends Component {
 
   selectedChat = (index) => {
     console.log('Index: ',index);
+    
     this.setState({
       selectedChatWithUser: index
     })
   }
 
   submitMessage = (data) => {
-    const docKey = this.buildDocKey(this.state.chats[0].users.filter(usr => usr !== this.state.email )[0]);
-    console.log(docKey)
+    const docKey = this.buildDocKey(
+      this.state.chats[this.state.selectedChatWithUser].users.filter(
+        (usr) => usr !== this.state.email
+      )[0]
+    );
 
-    // firebase.firestore().collection('todos').doc().set({
-    //   messages: [
-    //     {message: 'this is first text.', sender: localStorage.getItem('user')}
-    //   ],
-    //   receiverHasRead: false,
-    //   users: [localStorage.getItem('user'), 'thong@gmail.com']
-    // })
-    
     firebase
       .firestore()
       .collection('chats')
@@ -75,13 +72,44 @@ class DashboardComponent extends Component {
        
   }
 
+  newChatFn = async (new_user) => {
+    const docKey = this.buildDocKey(new_user);
+    console.log(docKey)
+
+    firebase.firestore().collection('users').doc(new_user).get()
+    .then( async doc => {
+      if(!doc.exists){
+        alert('User email is not exit!')
+      }else{      
+        firebase.firestore().collection('chats').doc(docKey).set({
+          messages: [
+            {message: 'Hello', sender: this.state.email, timestamp: Date.now()}
+          ],
+          receiverHasRead: false,
+          users: [this.state.email, new_user]
+        })
+      }
+    })
+
+  }
+
   render() {
     return (
       <div className="dash-board">
         <Row>
-          <ListUser userEmail={this.state.email} chats={this.state.chats} selectedChat={this.selectedChat}/>
+          <ListUser 
+            userEmail={this.state.email} 
+            chats={this.state.chats} 
+            selectedChat={this.selectedChat}
+            newChatProps={this.newChatFn}
+            warningNewMessage={this.state.receiverHasRead}
+          />
 
-          <ViewChat userCurrent={this.state.email} chat={this.state.chats[this.state.selectedChatWithUser]} submitMessage={this.submitMessage} />
+          <ViewChat 
+            userCurrent={this.state.email} 
+            chat={this.state.chats[this.state.selectedChatWithUser]} 
+            submitMessage={this.submitMessage} 
+          />
         </Row>
       </div>
     );
