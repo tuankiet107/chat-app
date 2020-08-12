@@ -1,0 +1,25 @@
+[debug] [2020-08-12T10:18:09.975Z] ----------------------------------------------------------------------
+[debug] [2020-08-12T10:18:09.977Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Kiet Tuan\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2020-08-12T10:18:09.978Z] CLI Version:   8.7.0
+[debug] [2020-08-12T10:18:09.978Z] Platform:      win32
+[debug] [2020-08-12T10:18:09.978Z] Node Version:  v12.15.0
+[debug] [2020-08-12T10:18:09.980Z] Time:          Wed Aug 12 2020 17:18:09 GMT+0700 (Indochina Time)
+[debug] [2020-08-12T10:18:09.980Z] ----------------------------------------------------------------------
+[debug] [2020-08-12T10:18:09.980Z] 
+[debug] [2020-08-12T10:18:09.988Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-08-12T10:18:09.989Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\dev-projects\chat-app
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+

@@ -22,6 +22,7 @@ class DashboardComponent extends Component {
 
   componentDidMount(){
     this.isComponentMounted = true;
+    this.run();
 
     const {history} = this.props;
     firebase
@@ -120,10 +121,24 @@ class DashboardComponent extends Component {
 
   }
 
+  run = () => {
+    const hamburger = document.querySelector('.hamburger');
+    const colLeft = document.querySelector('.col-left');
+    hamburger.addEventListener('click', () => {
+      colLeft.classList.toggle('toggleUser')
+    })
+  }
+
   render() {
     return (
       <div className="dash-board">
         <Row>
+          <div className="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          
           <ListUser 
             userEmail={this.state.email} 
             chats={this.state.chats} 
@@ -136,10 +151,11 @@ class DashboardComponent extends Component {
             chat={this.state.chats[this.state.selectedChatWithUser]} 
             submitMessage={this.submitMessage} 
           />
+
         </Row>
       </div>
     );
   }
 }
 
-export default DashboardComponent
+export default DashboardComponent;
