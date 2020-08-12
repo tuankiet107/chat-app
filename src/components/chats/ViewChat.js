@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Col, Form, FormControl, Button } from 'react-bootstrap';
+import {Col, Form, FormControl } from 'react-bootstrap';
 
 class ViewChat extends Component {
   constructor(){
@@ -28,9 +28,7 @@ class ViewChat extends Component {
         let { chat, userCurrent } = this.props;
         
         if(chat === undefined){
-            return <Col className="col-right-empty" md={8} lg={8}>
-                        Welcome to Kiet's chat app
-                    </Col>
+            return <Col className="col-right-empty" md={8} lg={8}></Col>
         }else {
             return (
               <Col className="col-right" md={8} lg={8}>
@@ -62,7 +60,7 @@ class ViewChat extends Component {
                 <div className="send-text">
                 <Form onSubmit={this.handleSend}>
                   <FormControl type="text" placeholder="..." onChange={this.sendMessages} className="mr-sm-2" id="textBox" />
-                  <Button type="submit" variant="primary">Send</Button>
+                  <i className="fas fa-paper-plane" onClick={this.handleSend}></i>
                 </Form>
                 </div>
               </Col>

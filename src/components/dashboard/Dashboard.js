@@ -9,45 +9,73 @@ import firebase from 'firebase';
 class DashboardComponent extends Component {
   constructor(props) {
     super(props);
+
+    this.isComponentMounted = false;
+    
     this.state = {
       email: '',
       chats: [],
       newChatWithUser: null,
-      selectedChatWithUser: null,
-      receiverHasRead: false
+      selectedChatWithUser: null
     };
   }
 
   componentDidMount(){
+    this.isComponentMounted = true;
+
     const {history} = this.props;
     firebase
         .auth()
-        .onAuthStateChanged(async user => {
+        .onAuthStateChanged( user => {
           if(!user){
               history.push('/');
           }else{
-            await firebase.firestore().collection('chats')
+            firebase.firestore().collection('chats')
                   .where('users', 'array-contains', user.email)
-                  .onSnapshot(async snapshot => {
-                    const chats = snapshot.docs.map(doc => doc.data());
-                    await this.setState({
-                      email: user.email,
-                      chats: chats
-                    });
+                  .onSnapshot( async snapshot => {
+                    const chats = await snapshot.docs.map(doc => doc.data());
+
+                    if(this.isComponentMounted){
+                      this.setState({
+                        email: user.email,
+                        chats: chats
+                      });
+                    }
                     console.log(this.state)
                   })
           }
         }) 
   }
 
+  componentWillUnmount(){
+    this.isComponentMounted = false;
+  }
+
   buildDocKey = (friend) => [this.state.email, friend].sort().join(':');
 
-  selectedChat = (index) => {
-    console.log('Index: ',index);
-    
-    this.setState({
+  selectedChat = async (index) => {
+    // console.log('Index: ',index);
+    await this.setState({
       selectedChatWithUser: index
     })
+    this.messageRead();
+  }
+
+  clickedNewMessage = (id) => this.state.chats[id].messages[this.state.chats[id].messages.length - 1].sender !== this.state.email;
+
+  messageRead = () => {
+    const docKey = this.buildDocKey(this.state.chats[this.state.selectedChatWithUser].users.filter(user => user !== this.state.email))[0];
+    if(this.clickedNewMessage(this.state.selectedChatWithUser)){
+      firebase
+      .firestore()
+      .collection('chats')
+      .doc(docKey)
+      .update({
+        receiverHasRead: true
+      })
+    }else {
+      console.log('Clicked message where the user was the sender');
+    }
   }
 
   submitMessage = (data) => {
@@ -69,7 +97,6 @@ class DashboardComponent extends Component {
         }),
         receiverHasRead: false
       })
-       
   }
 
   newChatFn = async (new_user) => {
@@ -102,7 +129,6 @@ class DashboardComponent extends Component {
             chats={this.state.chats} 
             selectedChat={this.selectedChat}
             newChatProps={this.newChatFn}
-            warningNewMessage={this.state.receiverHasRead}
           />
 
           <ViewChat 

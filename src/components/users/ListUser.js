@@ -13,7 +13,7 @@ class ListUser extends Component {
       }
     }
 
-    Logout = async () => {
+    Logout = () => {
         const {history} = this.props;
         firebase.auth().signOut()
 
@@ -47,20 +47,24 @@ class ListUser extends Component {
       document.getElementById('chat-with-user').value = '';
     }
 
+    userSender = (chat) => chat.messages[chat.messages.length - 1].sender === this.props.userEmail;
 
     render() {
         return (
           <Col className="col-left" md={4} lg={4}>
 
             <Row className="header-left">
-              <Col lg="4" md="8" sm="8" xs="8"><div id="info-user"></div></Col>
-              <Col lg="4" md="4" sm="4" xs="4"><button className="btn-logout" onClick={this.Logout}>
-                Logout
-              </button></Col>
+              <Col lg="4" md="8" sm="8" xs="8">
+                <i className="fas fa-user-circle"></i>
+              </Col>
+              <Col lg="4" md="4" sm="4" xs="4">
+                <button className="btn-logout" onClick={this.Logout}> Logout </button>
+              </Col>
               <Col lg="4" md="12"><button className="btn-new-chat" onClick={this.newChat}>New Chat</button></Col>
             </Row>
 
-            { this.state.isFormVisible ?              
+            { 
+              this.state.isFormVisible ?              
                 <Form onSubmit={this.handNewChat}>
                   <InputGroup>
                     <FormControl id="chat-with-user" type="text" placeholder="User email" onChange={this.chatWithUser} />
@@ -89,7 +93,12 @@ class ListUser extends Component {
                           (user) => user !== this.props.userEmail
                         )}
                       </span>
-                      {/* {this.props.warningNewMessage === false ? <span style={{marginLeft: 'auto', color: 'red'}}>New</span> : ''} */}
+
+                      {
+                        chat.receiverHasRead === false && !this.userSender(chat) ? 
+                        <span style={{marginLeft: 'auto', color: 'red'}}>New</span> : ''
+                      }
+                      
                     </ListGroup.Item>
                   );
                 })}

@@ -27,7 +27,7 @@ class LoginComponent extends Component {
         }
     }
 
-    handleLogin = async (e) => {
+    handleLogin = (e) => {
         e.preventDefault();
         const { history } = this.props;
 
